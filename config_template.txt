@@ -1,23 +1,27 @@
-# AssemblerComplete v16.2.0
-# Paths are relative to THIS CONFIG FILE, never to the script's directory.
-# Put the config beside the FASTQ/seed files, or use absolute paths below.
-# Run: julia --project=. --threads auto AssemblerComplete_v16.jl config_v16.txt
+# plastweaver - assembler settings (AssemblerComplete_v16.jl)
+#
+# plastweaver writes one config per library from this template
+# (results/LIBRARY/seed/LIBRARY_config.txt). The following keys are set automatically for
+# every library and must not be added here: Project name, Single/Paired, Forward reads,
+# Reverse reads, Seed Input, Output path, Genome Range (from the reference chosen by SeedRef;
+# 100000-180000 without one), Plastid panel, Reference dataset, Annotation dir,
+# Annotation dataset.
+#
+# Settings to check for your libraries:
+#   Read pairs to process   pairs read from the start of the files (0 = all pairs)
+#   Read Length             read length of the library
+#   Insert size             fragment length of the library (not estimated automatically)
+#   Max concurrent assemblies   parallel assemblies per library (memory use grows with it)
+# The other values are the tested defaults; change them only with a reason.
 
-Project name = Chloroplast_Assembly
 Assembly type = chl
-Output path = ./results_v16
 
-Forward reads = Hhok_1.fastq.gz
-Reverse reads = Hhok_2.fastq.gz
-Seed Input = seed.fasta
-Single/Paired = PE
 Read Length = 150
 
 # First N pairs, keeping pair synchronization. 0 = all pairs.
 # For an initial run you can use 200000; insufficient organelle coverage can
 # then cause fragmentation. This is not representative random subsampling.
 Read pairs to process = 9000000
-Genome Range = 110000-130000
 
 # UInt64 k-mers support every value 1..32, including T^32.
 K-mer = 31
@@ -91,13 +95,3 @@ Debug mode = false
 Show progress = true
 Progress interval = 1.0
 Progress log interval = 30.0
-
-# Compatibility with the separate seedsearchMT.jl script; v16 ignores these.
-# Keep these lines free of inline comments for that external script.
-SeedIR reads = 2000000
-K-mer size = 31
-Min k-mer hits for seed = 3
-Plastid panel = seedref/references/panel
-Reference dataset = refseq_plastid/dataset
-Annotation dir = refseq_plastid
-Annotation dataset = refseq_plastid/dataset
