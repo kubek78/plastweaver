@@ -1,0 +1,74 @@
+# CDS product names for PlastomeExport.jl genbank. rpsN and rplN not listed here get
+# "ribosomal protein SN" / "ribosomal protein LN". A CDS whose gene is neither listed nor
+# covered by those rules is exported as a gene without CDS and reported for review.
+# ycf genes without an established function are "hypothetical protein"; edit if preferred.
+gene	product
+accD	acetyl-CoA carboxylase carboxyltransferase beta subunit
+atpA	ATP synthase CF1 alpha subunit
+atpB	ATP synthase CF1 beta subunit
+atpE	ATP synthase CF1 epsilon subunit
+atpF	ATP synthase CF0 B subunit
+atpH	ATP synthase CF0 C subunit
+atpI	ATP synthase CF0 A subunit
+ccsA	cytochrome c heme attachment protein
+cemA	envelope membrane protein
+chlB	light-independent protochlorophyllide reductase subunit B
+chlL	light-independent protochlorophyllide reductase subunit L
+chlN	light-independent protochlorophyllide reductase subunit N
+clpP	ATP-dependent Clp protease proteolytic subunit
+clpP1	ATP-dependent Clp protease proteolytic subunit
+cysA	sulfate transport protein CysA
+cysT	sulfate transport protein CysT
+infA	translation initiation factor 1
+matK	maturase K
+ndhA	NADH-plastoquinone oxidoreductase subunit 1
+ndhB	NADH-plastoquinone oxidoreductase subunit 2
+ndhC	NADH-plastoquinone oxidoreductase subunit 3
+ndhD	NADH-plastoquinone oxidoreductase subunit 4
+ndhE	NADH-plastoquinone oxidoreductase subunit 4L
+ndhF	NADH-plastoquinone oxidoreductase subunit 5
+ndhG	NADH-plastoquinone oxidoreductase subunit 6
+ndhH	NADH-plastoquinone oxidoreductase subunit 7
+ndhI	NADH-plastoquinone oxidoreductase subunit I
+ndhJ	NADH-plastoquinone oxidoreductase subunit J
+ndhK	NADH-plastoquinone oxidoreductase subunit K
+petA	cytochrome f
+petB	cytochrome b6
+petD	cytochrome b6/f complex subunit IV
+petG	cytochrome b6/f complex subunit V
+petL	cytochrome b6/f complex subunit VI
+petN	cytochrome b6/f complex subunit VIII
+psaA	photosystem I P700 chlorophyll a apoprotein A1
+psaB	photosystem I P700 chlorophyll a apoprotein A2
+psaC	photosystem I subunit VII
+psaI	photosystem I subunit VIII
+psaJ	photosystem I subunit IX
+psaM	photosystem I subunit XII
+psbA	photosystem II protein D1
+psbB	photosystem II CP47 chlorophyll apoprotein
+psbC	photosystem II CP43 chlorophyll apoprotein
+psbD	photosystem II protein D2
+psbE	cytochrome b559 alpha subunit
+psbF	cytochrome b559 beta subunit
+psbH	photosystem II phosphoprotein
+psbI	photosystem II protein I
+psbJ	photosystem II protein J
+psbK	photosystem II protein K
+psbL	photosystem II protein L
+psbM	photosystem II protein M
+psbN	photosystem II protein N
+psbT	photosystem II protein T
+psbZ	photosystem II protein Z
+rbcL	ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit
+rpoA	RNA polymerase alpha subunit
+rpoB	RNA polymerase beta subunit
+rpoC1	RNA polymerase beta' subunit
+rpoC2	RNA polymerase beta'' subunit
+ycf1	hypothetical protein
+ycf2	hypothetical protein
+ycf3	photosystem I assembly protein Ycf3
+ycf4	photosystem I assembly protein Ycf4
+ycf12	hypothetical protein
+ycf15	hypothetical protein
+ycf66	hypothetical protein
+ycf68	hypothetical protein

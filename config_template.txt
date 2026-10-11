@@ -1,0 +1,103 @@
+# AssemblerComplete v16.2.0
+# Paths are relative to THIS CONFIG FILE, never to the script's directory.
+# Put the config beside the FASTQ/seed files, or use absolute paths below.
+# Run: julia --project=. --threads auto AssemblerComplete_v16.jl config_v16.txt
+
+Project name = Chloroplast_Assembly
+Assembly type = chl
+Output path = ./results_v16
+
+Forward reads = Hhok_1.fastq.gz
+Reverse reads = Hhok_2.fastq.gz
+Seed Input = seed.fasta
+Single/Paired = PE
+Read Length = 150
+
+# First N pairs, keeping pair synchronization. 0 = all pairs.
+# For an initial run you can use 200000; insufficient organelle coverage can
+# then cause fragmentation. This is not representative random subsampling.
+Read pairs to process = 9000000
+Genome Range = 110000-130000
+
+# UInt64 k-mers support every value 1..32, including T^32.
+K-mer = 31
+Minimizer window = 10
+# GLOBAL fraction of ACTUALLY LOADED reads (R1+R2 in PE), not per worker.
+# Keys above either frequency limit are removed entirely; lists are not truncated.
+# In an organelle-enriched library, increase the fraction if useful keys vanish.
+Max minimizer frequency = 0.01
+Max postings per minimizer = 100000
+Batch size = 10000
+
+# FASTQ quality encoding: Phred+33. 0 preserves bases regardless of quality;
+# 20 masks bases below Q20 to N. N never counts as an alignment match.
+Min base quality = 0
+
+# True support from distinct pairs, with conflicting pair votes excluded.
+Min overlap = 50
+Min coverage = 3
+Min identity = 0.98
+Consensus fraction = 0.80
+Consensus ratio = 2.0
+Max extension = 32
+
+Min seed hits = 2
+Seed correction = true
+Seeds per record = 2
+Max initial contigs = 8
+Max branch paths = 4
+Branch min fraction = 0.20
+Max iterations = 20000
+Max candidates = 100000
+Max concurrent assemblies = 4
+
+# Insert = complete DNA fragment (outer distance), NOT gap between reads.
+# There is no automatic estimation; set this from library QC/read mapping.
+Insert size = 350
+Insert tolerance = 0.30
+Paired validation = true
+Min paired support = 3
+
+# Overlap merging, without filling unsupported gaps with Ns.
+# Both endpoints must have only one supported partner.
+Scaffolding = true
+Scaffold min overlap = 100
+Scaffold max overlap = 5000
+Scaffold identity = 0.99
+Scaffold rounds = 8
+
+# Separate closure criteria. In PE, both spanning reads and FR pairs are needed.
+Circular min overlap = 150
+Circular max overlap = 5000
+Circular identity = 0.995
+Circular min reads = 3
+Circular check every = 200
+Junction anchor = 20
+
+# Additional FASTA for already circular chloroplasts, rotated to LSC-IR-SSC-IR.
+# Detection uses the sequence; this does not assemble missing repeat copies.
+Normalize plastome = true
+IR min length = 1000
+IR min identity = 0.995
+IR min SC length = 100
+
+Min contig length = 300
+# true also saves all raw assembly paths before deduplication.
+Debug mode = false
+
+# Live stage progress, elapsed wall time and current process RSS in decimal GB.
+# Old configs without these entries enable the same defaults.
+# Terminal: one refreshed line. Redirected output/logs: periodic plain lines.
+Show progress = true
+Progress interval = 1.0
+Progress log interval = 30.0
+
+# Compatibility with the separate seedsearchMT.jl script; v16 ignores these.
+# Keep these lines free of inline comments for that external script.
+SeedIR reads = 2000000
+K-mer size = 31
+Min k-mer hits for seed = 3
+Plastid panel = seedref/references/panel
+Reference dataset = refseq_plastid/dataset
+Annotation dir = refseq_plastid
+Annotation dataset = refseq_plastid/dataset

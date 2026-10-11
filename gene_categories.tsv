@@ -1,0 +1,31 @@
+# Functional categories of plastid genes for PlastomeExport.jl gene-table.
+# match: exact (gene name), kind (tRNA or rRNA), prefix (longest matching prefix wins).
+# Lookup order: exact, kind, prefix. Genes matching nothing go to "Unclassified" with a warning.
+# The order of rows sets the order of categories and subgroups in the output tables.
+# color: fill of the subgroup on genome maps (PlastomeExport.jl map); one color per subgroup.
+match	name	category	subgroup	color
+kind	rRNA	Self-replication	Ribosomal RNAs	#d1495b
+kind	tRNA	Self-replication	Transfer RNAs	#7b4fa0
+prefix	rps	Self-replication	Small ribosomal subunit	#7fb7d9
+prefix	rpl	Self-replication	Large ribosomal subunit	#b59bcf
+prefix	rpo	Self-replication	DNA-dependent RNA polymerase	#ef8f8a
+prefix	psa	Photosynthesis	Photosystem I	#2a6fbb
+prefix	psb	Photosynthesis	Photosystem II	#3a9a4a
+exact	lhbA	Photosynthesis	Photosystem II	#3a9a4a
+exact	pbf1	Photosynthesis	Photosystem II	#3a9a4a
+prefix	pet	Photosynthesis	Cytochrome b6/f complex	#8fc46a
+prefix	atp	Photosynthesis	ATP synthase	#e8862e
+prefix	ndh	Photosynthesis	NADH dehydrogenase	#e9b949
+exact	rbcL	Photosynthesis	Rubisco large subunit	#c9b400
+prefix	chl	Photosynthesis	Light-independent protochlorophyllide reductase	#4fb3a9
+exact	matK	Other genes	Maturase	#5d8aa8
+exact	clpP	Other genes	Protease	#c46ba0
+exact	clpP1	Other genes	Protease	#c46ba0
+exact	cemA	Other genes	Envelope membrane protein	#a0522d
+exact	accD	Other genes	Acetyl-CoA carboxylase subunit	#8c8c3c
+exact	ccsA	Other genes	c-type cytochrome synthesis	#9e9ac8
+exact	infA	Other genes	Translation initiation factor	#6c9a8b
+exact	cysA	Other genes	Sulfate transport	#b07aa1
+exact	cysT	Other genes	Sulfate transport	#b07aa1
+prefix	ycf	Genes of unknown function	Conserved hypothetical ORFs	#9a5b2e
+prefix	orf	Genes of unknown function	Other ORFs	#bbbbbb
