@@ -30,6 +30,21 @@ TrainExistence, IRScan, IRCheck, IRDiag.
 =#
 module PlastomeAnnotator
 
+# .gz input: CodecZlib (pure Julia, any operating system) when the active environment provides
+# it - plastweaver, the assembler and `julia --project=...` runs; otherwise the gzip command.
+const CODECZLIB = try
+    Base.require(Base.PkgId(Base.UUID("944b1d66-785c-5afd-91f1-9de20f533193"), "CodecZlib"))
+catch
+    nothing
+end
+
+"Opens a plain or gzip-compressed file for reading (decompressed stream for .gz)."
+function open_maybe_gz(path::AbstractString)
+    endswith(path, ".gz") || return open(path)
+    CODECZLIB === nothing && return open(`gzip -dc $path`)
+    return Base.invokelatest(CODECZLIB.GzipDecompressorStream, open(path))
+end
+
 # ======================================================================
 # PlastomeIR
 # ======================================================================
@@ -927,11 +942,11 @@ end
 """
     foreach_fasta(f, path)
 
-Calls f(id, sequence) for each record of a FASTA file (plain or .gz via the gzip
-command) without holding the whole file in memory.
+Calls f(id, sequence) for each record of a FASTA file (plain or .gz, see open_maybe_gz)
+without holding the whole file in memory.
 """
 function foreach_fasta(f, path::AbstractString)
-    io = endswith(path, ".gz") ? open(`gzip -dc $path`) : open(path)
+    io = parentmodule(@__MODULE__).open_maybe_gz(path)
     try
         foreach_fasta(f, io)
     finally
@@ -943,8 +958,7 @@ end
 """
     foreach_fasta(f, io::IO)
 
-Same on an open stream, e.g. `foreach_fasta(f, GzipDecompressorStream(open(path)))` when
-CodecZlib is available, which avoids the external gzip command.
+Same on an open stream.
 """
 function foreach_fasta(f, io::IO)
     name = ""
@@ -961,9 +975,9 @@ function foreach_fasta(f, io::IO)
     return nothing
 end
 
-"Reads a FASTA file (plain or .gz via the gzip command) into id => sequence pairs."
+"Reads a FASTA file (plain or .gz) into id => sequence pairs."
 function read_fasta(path::AbstractString)
-    io = endswith(path, ".gz") ? open(`gzip -dc $path`) : open(path)
+    io = parentmodule(@__MODULE__).open_maybe_gz(path)
     out = Pair{String,String}[]
     name = ""
     buf = IOBuffer()
@@ -2913,7 +2927,7 @@ function read_tsv(f, path)
 end
 
 function each_fasta(f, path)
-    io = endswith(path, ".gz") ? open(`gzip -dc $path`) : open(path)
+    io = open_maybe_gz(path)
     name = ""
     buf = IOBuffer()
     try
@@ -4272,7 +4286,7 @@ end
 
 "Streams a (gzipped) FASTA, calling f(id, seq) for every record."
 function foreach_fasta(f, path)
-    io = endswith(path, ".gz") ? open(`gzip -dc $path`) : open(path)
+    io = parentmodule(@__MODULE__).open_maybe_gz(path)
     name = ""
     buf = IOBuffer()
     try
@@ -4478,7 +4492,7 @@ function read_tsv(f, path)
 end
 
 function foreach_fasta(f, path)
-    io = endswith(path, ".gz") ? open(`gzip -dc $path`) : open(path)
+    io = parentmodule(@__MODULE__).open_maybe_gz(path)
     name = ""
     buf = IOBuffer()
     try
@@ -4813,7 +4827,7 @@ end # module TrainExistence
 #=
 ir_scan.jl - IR detection for every genome of the land-plant plastid dataset, and
 IRscope-style junction plots for chosen records. Needs PlastomeIR.jl in the same
-directory. Base Julia; .gz input is read through the system gzip command.
+directory. Base Julia; .gz input through open_maybe_gz (CodecZlib, else the gzip command).
 
   julia --threads auto PlastomeAnnotator.jl ir-scan [--dataset DIR] [--out ir_table.tsv] [--min-len 500]
   julia PlastomeAnnotator.jl ir-scan --plot NC_000932,NC_039750 --svg ir_junctions.svg [--dataset DIR]
